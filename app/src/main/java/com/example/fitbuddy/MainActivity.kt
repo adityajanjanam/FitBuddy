@@ -8,9 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.AndroidEntryPoint
-import com.example.fitbuddy.ui.screens.* // update if needed
+import com.example.fitbuddy.ui.screens.*
 import com.example.fitbuddy.ui.theme.FitBuddyTheme
+import dagger.hilt.android.AndroidEntryPoint
+import com.example.fitbuddy.ui.theme.screens.HistoryScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -18,14 +19,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FitBuddyTheme {
-                FitBuddyApp()
+                FitBuddyNavApp()
             }
         }
     }
 }
 
 @Composable
-fun FitBuddyApp() {
+fun FitBuddyNavApp() {
     val navController = rememberNavController()
     FitBuddyNavHost(navController = navController)
 }
@@ -43,7 +44,7 @@ fun FitBuddyNavHost(navController: NavHostController) {
             QuoteScreen(navController)
         }
         composable("history") {
-            HistoryScreen(navController)
+            HistoryScreen()
         }
     }
 }

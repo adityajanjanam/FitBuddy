@@ -1,14 +1,12 @@
 package com.example.fitbuddy.ui.theme.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.fitbuddy.data.model.Workout
-
 
 @Composable
 fun HistoryScreen() {
@@ -23,17 +21,17 @@ fun HistoryScreen() {
             Column(modifier = Modifier.padding(vertical = 8.dp)) {
                 Text(text = "Workout: ${workout.name}")
                 Text(text = "Reps: ${workout.reps}")
-                Text(text = "Duration: ${workout.duration}")
+                Text(text = "Duration: ${workout.duration} min")
             }
         }
     }
 }
 
-// Move this to a repository or ViewModel later
+// Replace with ViewModel later
 fun fetchWorkouts(): List<Workout> {
     return listOf(
-        Workout("Push Ups", 15, "10 mins"),
-        Workout("Planks", 3, "5 mins"),
-        Workout("Squats", 20, "15 mins")
+        Workout("Push Ups", 15, 10),
+        Workout("Planks", 3, 5),
+        Workout("Squats", 20, 15)
     )
 }

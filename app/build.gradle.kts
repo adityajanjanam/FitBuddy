@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.hilt.android.v248)
     kapt(libs.hilt.android.compiler.v248)
 
+
     // ✅ Navigation for Compose
     implementation(libs.androidx.navigation.compose)
 
@@ -69,6 +70,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.javapoet)
+
 
     // ✅ Firebase
     implementation(platform(libs.firebase.bom))
