@@ -1,7 +1,7 @@
 // ------------------------------
 // 5. ui/screens/HomeScreen.kt
 // ------------------------------
-package com.example.fitbuddy.ui.screens
+package com.example.fitbuddy.ui.theme.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

@@ -1,27 +1,74 @@
 package com.example.fitbuddy.ui.theme.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.fitbuddy.data.model.Workout
+import com.example.fitbuddy.viewmodel.WorkoutViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HistoryScreen() {
-    val workouts = fetchWorkouts()
+    val viewModel: WorkoutViewModel = viewModel()
+    val workouts by viewModel.workouts.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchWorkouts()
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        workouts.forEach { workout ->
-            Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                Text(text = "Workout: ${workout.name}")
-                Text(text = "Reps: ${workout.reps}")
-                Text(text = "Duration: ${workout.duration} min")
+        if (isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else if (error != null) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = error!!,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        } else if (workouts.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("No workouts logged yet")
+            }
+        } else {
+            workouts.forEach { workout ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = workout.name,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(text = "Reps: ${workout.reps}")
+                        Text(text = "Duration: ${workout.duration} min")
+                    }
+                }
             }
         }
     }

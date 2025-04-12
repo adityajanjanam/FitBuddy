@@ -3,15 +3,11 @@ package com.example.fitbuddy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.navigation.compose.rememberNavController
-import com.example.fitbuddy.ui.screens.*
 import com.example.fitbuddy.ui.theme.FitBuddyTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.example.fitbuddy.ui.theme.screens.HistoryScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -19,32 +15,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FitBuddyTheme {
-                FitBuddyNavApp()
+                val navController = rememberNavController()
+                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                val scope = rememberCoroutineScope()
+
+                // Main app scaffold with drawer and navigation
+                AppScaffold(
+                    navController = navController,
+                    drawerState = drawerState,
+                    scope = scope
+                )
             }
-        }
-    }
-}
-
-@Composable
-fun FitBuddyNavApp() {
-    val navController = rememberNavController()
-    FitBuddyNavHost(navController = navController)
-}
-
-@Composable
-fun FitBuddyNavHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            HomeScreen(navController)
-        }
-        composable("logWorkout") {
-            LogWorkoutScreen(navController)
-        }
-        composable("quote") {
-            QuoteScreen(navController)
-        }
-        composable("history") {
-            HistoryScreen()
         }
     }
 }
